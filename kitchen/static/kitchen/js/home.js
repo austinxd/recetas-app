@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!container) return;
         
         try {
-            container.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>';
+            container.innerHTML = '<div class="text-center">🔄 Cargando...</div>';
             
             const recipes = await KitchenUtils.apiRequest('recipes/?ordering=-id');
             
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 container.innerHTML = `
                     <div class="text-center text-muted py-3">
-                        <i class="fas fa-utensils fa-2x mb-2"></i>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🍽️</div>
                         <p class="mb-0">¡No hay recetas aún!</p>
                         <small>Crea tu primera receta deliciosa</small>
                     </div>
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error loading featured recipes:', error);
             container.innerHTML = `
                 <div class="text-center text-muted py-3">
-                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
                     <p class="mb-0">Error cargando recetas</p>
                     <small>Intenta recargar la página</small>
                 </div>
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!container) return;
         
         try {
-            container.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>';
+            container.innerHTML = '<div class="text-center">🔄 Cargando...</div>';
             
             const ingredients = await KitchenUtils.apiRequest('ingredients/low_stock/?threshold=20');
             
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 container.innerHTML = `
                     <div class="text-center text-muted py-3">
-                        <i class="fas fa-check-circle fa-2x mb-2 text-success"></i>
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem; color: #28a745;">✅</div>
                         <p class="mb-0">¡Todo con buen stock!</p>
                         <small>Todos los ingredientes tienen suficiente inventario</small>
                     </div>
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error loading low stock ingredients:', error);
             container.innerHTML = `
                 <div class="text-center text-muted py-3">
-                    <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚠️</div>
                     <p class="mb-0">Error cargando inventario</p>
                     <small>Intenta recargar la página</small>
                 </div>

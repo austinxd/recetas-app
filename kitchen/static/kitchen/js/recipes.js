@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = `
                 <div class="col-12">
                     <div class="text-center text-muted py-5">
-                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
                         <h4>No se encontraron recetas</h4>
                         <p>Intenta con otros términos de búsqueda</p>
                     </div>
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card recipe-card h-100">
                     <div class="card-img-top d-flex align-items-center justify-content-center">
-                        <i class="fas fa-utensils"></i>
+                        <span style="font-size: 2rem;">🍽️</span>
                     </div>
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${recipe.name}</h5>
@@ -72,18 +72,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <small class="text-muted">
-                                    <i class="fas fa-clock me-1"></i>
-                                    ${recipe.preparation_time || 'N/A'} min
+                                    🕰️ ${recipe.preparation_time || 'N/A'} min
                                 </small>
                                 <small class="text-${recipe.producible_portions > 0 ? 'success' : 'danger'}">
-                                    <i class="fas fa-box me-1"></i>
-                                    ${recipe.producible_portions} disponibles
+                                    📦 ${recipe.producible_portions} disponibles
                                 </small>
                             </div>
                         </div>
                         <div class="mt-auto">
                             <button class="btn btn-primary btn-sm me-2" onclick="viewRecipe(${recipe.id})">
-                                <i class="fas fa-eye me-1"></i>Ver Detalles
+                                👁️ Ver Detalles
                             </button>
                             <small class="text-success fw-bold">
                                 Total: ${KitchenUtils.formatCurrency(recipe.batch_cost)}

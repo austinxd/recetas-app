@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             tbody.innerHTML = `
                 <tr id="no-ingredients-row">
                     <td colspan="6" class="text-center text-muted">
-                        <i class="fas fa-carrot fa-2x mb-2"></i>
-                        <br>No hay ingredientes agregados aún
+                        <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">🥕</span>
+                        No hay ingredientes agregados aún
                     </td>
                 </tr>
             `;
@@ -116,8 +116,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         </span>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-sm btn-danger" onclick="removeIngredient(${index})">
-                            <i class="fas fa-trash"></i>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="removeIngredient(${index})" title="Eliminar ingrediente">
+                            🗑️
                         </button>
                     </td>
                 </tr>
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const saveBtn = document.getElementById('save-recipe');
             saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+            saveBtn.innerHTML = '🔄 Guardando...';
             
             await KitchenUtils.apiRequest('recipes/', {
                 method: 'POST',
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
             KitchenUtils.showError('Error guardando la receta');
             const saveBtn = document.getElementById('save-recipe');
             saveBtn.disabled = false;
-            saveBtn.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Receta';
+            saveBtn.innerHTML = '💾 Guardar Receta';
         }
     }
     

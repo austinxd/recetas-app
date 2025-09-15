@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = `
                 <div class="col-12">
                     <div class="text-center text-muted py-5">
-                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
                         <h4>No se encontraron ingredientes</h4>
                         <p>Intenta con otros términos de búsqueda</p>
                     </div>
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="card-body">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="ingredient-icon bg-${stockLevel.color} me-3">
-                                    <i class="fas ${stockIcon}"></i>
+                                    ${getStockEmoji(ingredient.unit)}
                                 </div>
                                 <div>
                                     <h5 class="card-title mb-1">${ingredient.name}</h5>
@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div class="btn-group w-100" role="group">
                                     <button class="btn btn-outline-primary btn-sm" 
                                             onclick="editIngredient(${ingredient.id})">
-                                        <i class="fas fa-edit"></i> Editar
+                                        ✏️ Editar
                                     </button>
                                     <button class="btn btn-outline-success btn-sm" 
                                             onclick="updateStock(${ingredient.id})">
-                                        <i class="fas fa-boxes"></i> Stock
+                                        📦 Stock
                                     </button>
                                 </div>
                             </div>
@@ -109,19 +109,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Get stock icon by unit
-    function getStockIcon(unit) {
-        const icons = {
-            'g': 'fa-weight-hanging',
-            'kg': 'fa-weight-hanging', 
-            'ml': 'fa-tint',
-            'l': 'fa-tint',
-            'u': 'fa-cube',
-            'cup': 'fa-coffee',
-            'tbsp': 'fa-utensil-spoon',
-            'tsp': 'fa-utensil-spoon'
+    // Get stock emoji by unit
+    function getStockEmoji(unit) {
+        const emojis = {
+            'g': '⚖️',
+            'kg': '⚖️', 
+            'ml': '🧃',
+            'l': '🧃',
+            'u': '🧿',
+            'cup': '☕',
+            'tbsp': '🥄',
+            'tsp': '🥄'
         };
-        return icons[unit] || 'fa-box';
+        return emojis[unit] || '📦';
     }
     
     // Search ingredients
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('current-stock').value = ingredient.current_stock;
         
         document.querySelector('#addIngredientModal .modal-title').innerHTML = 
-            '<i class="fas fa-edit me-2"></i>Editar Ingrediente';
+            '✏️ Editar Ingrediente';
         
         new bootstrap.Modal(document.getElementById('addIngredientModal')).show();
     };
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const saveBtn = document.getElementById('save-ingredient');
             saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+            saveBtn.innerHTML = '🔄 Guardando...';
             
             if (id) {
                 // Update existing
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             const saveBtn = document.getElementById('save-ingredient');
             saveBtn.disabled = false;
-            saveBtn.innerHTML = '<i class="fas fa-save me-2"></i>Guardar';
+            saveBtn.innerHTML = '💾 Guardar';
         }
     }
     
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const updateBtn = document.getElementById('update-stock');
             updateBtn.disabled = true;
-            updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Actualizando...';
+            updateBtn.innerHTML = '🔄 Actualizando...';
             
             await KitchenUtils.apiRequest(`ingredients/${id}/update_stock/`, {
                 method: 'PATCH',
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } finally {
             const updateBtn = document.getElementById('update-stock');
             updateBtn.disabled = false;
-            updateBtn.innerHTML = '<i class="fas fa-sync me-2"></i>Actualizar';
+            updateBtn.innerHTML = '🔄 Actualizar';
         }
     }
     
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('ingredient-form').reset();
         document.getElementById('ingredient-id').value = '';
         document.querySelector('#addIngredientModal .modal-title').innerHTML = 
-            '<i class="fas fa-plus me-2"></i>Nuevo Ingrediente';
+            '➕ Nuevo Ingrediente';
     }
     
     // Event listeners

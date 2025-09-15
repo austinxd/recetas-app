@@ -52,49 +52,40 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!toastContainer) {
                 toastContainer = document.createElement('div');
                 toastContainer.id = 'toast-container';
-                toastContainer.className = 'position-fixed top-0 end-0 p-3';
-                toastContainer.style.zIndex = '1055';
                 document.body.appendChild(toastContainer);
             }
             
             // Create toast element
             const toast = document.createElement('div');
-            toast.className = `toast align-items-center text-white bg-${type === 'error' ? 'danger' : type} border-0`;
+            toast.className = `minimal-toast toast-${type}`;
             toast.setAttribute('role', 'alert');
             toast.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <i class="fas fa-${this.getToastIcon(type)} me-2"></i>
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                <div class="toast-content">
+                    <span class="toast-icon">${this.getToastIcon(type)}</span>
+                    <span class="toast-message">${message}</span>
+                    <button type="button" class="toast-close" onclick="this.parentElement.parentElement.remove()">×</button>
                 </div>
             `;
             
             toastContainer.appendChild(toast);
             
-            // Show toast
-            const bsToast = new bootstrap.Toast(toast, {
-                autohide: true,
-                delay: 5000
-            });
-            bsToast.show();
-            
-            // Remove toast after it's hidden
-            toast.addEventListener('hidden.bs.toast', function() {
-                toast.remove();
-            });
+            // Auto remove after delay
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 5000);
         },
         
         // Get toast icon
         getToastIcon: function(type) {
             const icons = {
-                'success': 'check-circle',
-                'error': 'exclamation-circle',
-                'warning': 'exclamation-triangle',
-                'info': 'info-circle'
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️'
             };
-            return icons[type] || 'info-circle';
+            return icons[type] || 'ℹ️';
         },
         
         // API request helper
@@ -182,20 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Initialize tooltips and popovers if Bootstrap is loaded
-    if (typeof bootstrap !== 'undefined') {
-        // Initialize tooltips
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-        
-        // Initialize popovers
-        const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-        popoverTriggerList.map(function(popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl);
-        });
-    }
+    // All UI components are now native - no external dependencies needed
     
     // Add smooth scrolling to all anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -216,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
+                submitBtn.innerHTML = '🔄 Guardando...';
                 
                 // Re-enable button after 5 seconds as fallback
                 setTimeout(() => {
@@ -247,10 +225,46 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
     
+    // Mobile navbar toggle functionality
+    initMobileNavbar();
+    
     // Theme toggle functionality
     initThemeToggle();
     
     console.log('Kitchen Management System initialized 🍳');
+    
+    // Initialize mobile navbar
+    function initMobileNavbar() {
+        const navbarToggler = document.getElementById('navbar-toggler');
+        const navbarCollapse = document.getElementById('navbarNav');
+        
+        if (navbarToggler && navbarCollapse) {
+            navbarToggler.addEventListener('click', function() {
+                navbarCollapse.classList.toggle('show');
+                
+                // Update aria-expanded attribute
+                const isExpanded = navbarCollapse.classList.contains('show');
+                navbarToggler.setAttribute('aria-expanded', isExpanded);
+            });
+            
+            // Close mobile menu when clicking on a nav link
+            const navLinks = navbarCollapse.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navbarCollapse.classList.remove('show');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                });
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+                    navbarCollapse.classList.remove('show');
+                    navbarToggler.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    }
     
     // Initialize theme toggle
     function initThemeToggle() {
@@ -272,17 +286,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('theme', newTheme);
                 updateThemeIcon(newTheme);
                 
-                // Animate the toggle
-                themeToggle.style.transform = 'scale(0.9)';
+                // Simple animation
+                themeToggle.style.opacity = '0.7';
                 setTimeout(() => {
-                    themeToggle.style.transform = '';
-                }, 150);
+                    themeToggle.style.opacity = '';
+                }, 100);
             });
         }
         
         function updateThemeIcon(theme) {
             if (themeIcon) {
-                themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
             }
         }
     }

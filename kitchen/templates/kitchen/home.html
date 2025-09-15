@@ -17,16 +17,10 @@
             </p>
             <div class="hero-actions">
                 <a href="{% url 'kitchen:create_recipe' %}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus-circle"></i>
                     Crear Receta
                 </a>
                 <a href="{% url 'kitchen:recipes' %}" class="btn btn-secondary btn-lg">
-                    <i class="fas fa-book-open"></i>
                     Ver Recetas
-                </a>
-                <a href="{% url 'kitchen:ingredients' %}" class="btn btn-success btn-lg">
-                    <i class="fas fa-carrot"></i>
-                    Ingredientes
                 </a>
             </div>
         </div>
@@ -35,25 +29,19 @@
     <!-- Estadísticas -->
     <section class="stats-grid">
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-book-open"></i>
-            </div>
+            <div class="stat-icon">📖</div>
             <div class="stat-number" id="total-recipes">{{ total_recipes }}</div>
-            <div class="stat-label">Recetas Totales</div>
+            <div class="stat-label">Recetas</div>
         </div>
         
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-carrot"></i>
-            </div>
+            <div class="stat-icon">🥕</div>
             <div class="stat-number" id="total-ingredients">{{ total_ingredients }}</div>
             <div class="stat-label">Ingredientes</div>
         </div>
         
         <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-euro-sign"></i>
-            </div>
+            <div class="stat-icon">€</div>
             <div class="stat-number" id="avg-cost">€{{ avg_cost|floatformat:2 }}</div>
             <div class="stat-label">Costo Promedio</div>
         </div>
@@ -65,14 +53,12 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-star me-2"></i>
                     Recetas Destacadas
                 </h3>
             </div>
             <div class="card-body" id="featured-recipes">
                 <div class="d-flex align-items-center justify-content-center" style="min-height: 150px;">
                     <div class="text-center text-tertiary-color">
-                        <i class="fas fa-spinner fa-spin fa-2x mb-4"></i>
                         <p>Cargando recetas destacadas...</p>
                     </div>
                 </div>
@@ -83,14 +69,12 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-exclamation-triangle me-2"></i>
                     Stock Bajo
                 </h3>
             </div>
             <div class="card-body" id="low-stock-ingredients">
                 <div class="d-flex align-items-center justify-content-center" style="min-height: 150px;">
                     <div class="text-center text-tertiary-color">
-                        <i class="fas fa-spinner fa-spin fa-2x mb-4"></i>
                         <p>Verificando inventario...</p>
                     </div>
                 </div>
