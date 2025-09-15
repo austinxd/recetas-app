@@ -2,7 +2,12 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q
+from django.db.models import Q, Avg
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 from .models import Ingredient, Recipe, RecipeIngredient
 from .serializers import (
     IngredientSerializer, 
@@ -172,3 +177,50 @@ class RecipeIngredientViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             return RecipeIngredientDetailSerializer
         return RecipeIngredientSerializer
+
+
+# HTML Views for Frontend
+class HomeView(TemplateView):
+    """Home page view with dashboard statistics."""
+    template_name = 'kitchen/home.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Calculate statistics
+        total_recipes = Recipe.objects.count()
+        total_ingredients = Ingredient.objects.count()
+        
+        # Calculate average cost using proper database fields
+        recipes_with_costs = Recipe.objects.prefetch_related('recipeingredient_set__ingredient')
+        total_cost = 0
+        recipe_count = 0
+        
+        for recipe in recipes_with_costs:
+            if recipe.recipeingredient_set.exists():
+                total_cost += float(recipe.batch_cost)
+                recipe_count += 1
+        
+        avg_cost = total_cost / recipe_count if recipe_count > 0 else 0
+        
+        context.update({
+            'total_recipes': total_recipes,
+            'total_ingredients': total_ingredients,
+            'avg_cost': avg_cost,
+        })
+        return context
+
+
+class RecipesView(TemplateView):
+    """Recipes listing page."""
+    template_name = 'kitchen/recipes.html'
+
+
+class CreateRecipeView(TemplateView):
+    """Create new recipe page."""
+    template_name = 'kitchen/create_recipe.html'
+
+
+class IngredientsView(TemplateView):
+    """Ingredients management page."""  
+    template_name = 'kitchen/ingredients.html'
