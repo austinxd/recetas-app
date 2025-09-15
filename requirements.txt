@@ -9,8 +9,8 @@ python-dotenv==1.0.0
 
 # Base de datos
 dj-database-url==2.1.0
-psycopg2-binary==2.9.7  # Para PostgreSQL
-# mysqlclient==2.2.0    # Descomenta para MySQL
+psycopg2-binary==2.9.7  # Para PostgreSQL (desarrollo)
+mysqlclient==2.2.0      # Para MySQL (producción)
 
 # Servidor de producción
 gunicorn==21.2.0
