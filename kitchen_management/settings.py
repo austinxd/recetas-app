@@ -171,3 +171,9 @@ CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 
 # Allow all hosts in development
 ALLOWED_HOSTS = ['*']
+
+# CSRF trusted origins for Replit domains
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.replit.dev',
+    'https://*.repl.co',
+]
