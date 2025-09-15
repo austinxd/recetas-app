@@ -247,5 +247,43 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
     
+    // Theme toggle functionality
+    initThemeToggle();
+    
     console.log('Kitchen Management System initialized 🍳');
+    
+    // Initialize theme toggle
+    function initThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.classList.toggle('dark', currentTheme === 'dark');
+        updateThemeIcon(currentTheme);
+        
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const isDark = body.classList.contains('dark');
+                const newTheme = isDark ? 'light' : 'dark';
+                
+                body.classList.toggle('dark', newTheme === 'dark');
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+                
+                // Animate the toggle
+                themeToggle.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    themeToggle.style.transform = '';
+                }, 150);
+            });
+        }
+        
+        function updateThemeIcon(theme) {
+            if (themeIcon) {
+                themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+    }
 });
