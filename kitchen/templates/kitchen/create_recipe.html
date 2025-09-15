@@ -1,0 +1,168 @@
+{% extends 'kitchen/base.html' %}
+{% load static %}
+
+{% block title %}Nueva Receta - Gestión de Cocina{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-plus-circle me-2"></i>
+                    Crear Nueva Receta
+                </h3>
+            </div>
+            <div class="card-body">
+                <form id="recipe-form">
+                    {% csrf_token %}
+                    
+                    <!-- Información básica de la receta -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="recipe-name" class="form-label">
+                                    <i class="fas fa-utensils me-1"></i>
+                                    Nombre de la Receta *
+                                </label>
+                                <input type="text" class="form-control" id="recipe-name" 
+                                       placeholder="Ej: Pasta Carbonara" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="yield-portions" class="form-label">
+                                    <i class="fas fa-users me-1"></i>
+                                    Porciones *
+                                </label>
+                                <input type="number" class="form-control" id="yield-portions" 
+                                       placeholder="4" min="1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="prep-time" class="form-label">
+                                    <i class="fas fa-clock me-1"></i>
+                                    Tiempo (min)
+                                </label>
+                                <input type="number" class="form-control" id="prep-time" 
+                                       placeholder="30">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">
+                            <i class="fas fa-align-left me-1"></i>
+                            Descripción
+                        </label>
+                        <textarea class="form-control" id="description" rows="3" 
+                                  placeholder="Describe tu receta deliciosa..."></textarea>
+                    </div>
+
+                    <!-- Selector de ingredientes -->
+                    <hr class="my-4">
+                    <h5 class="mb-3">
+                        <i class="fas fa-carrot text-warning me-2"></i>
+                        Ingredientes
+                    </h5>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            <label class="form-label">Seleccionar Ingrediente</label>
+                            <select class="form-select" id="ingredient-select">
+                                <option value="">Selecciona un ingrediente...</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="ingredient-quantity" 
+                                   placeholder="250" step="0.001">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Unidad</label>
+                            <input type="text" class="form-control" id="ingredient-unit" readonly>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="button" class="btn btn-primary w-100" id="add-ingredient">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lista de ingredientes agregados -->
+                    <div id="ingredients-list" class="mb-4">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Ingrediente</th>
+                                        <th>Cantidad</th>
+                                        <th>Unidad</th>
+                                        <th>Costo</th>
+                                        <th>Stock</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ingredients-tbody">
+                                    <tr id="no-ingredients-row">
+                                        <td colspan="6" class="text-center text-muted">
+                                            <i class="fas fa-carrot fa-2x mb-2"></i>
+                                            <br>No hay ingredientes agregados aún
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Resumen de costos -->
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <i class="fas fa-calculator text-success me-2"></i>
+                                Resumen de Costos
+                            </h6>
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <div class="stat-box">
+                                        <h4 class="text-primary mb-0" id="total-cost">$0.00</h4>
+                                        <small class="text-muted">Costo Total</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-box">
+                                        <h4 class="text-success mb-0" id="cost-per-portion">$0.00</h4>
+                                        <small class="text-muted">Por Porción</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-box">
+                                        <h4 class="text-warning mb-0" id="stock-status">✓ Suficiente</h4>
+                                        <small class="text-muted">Stock</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'kitchen:recipes' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-success" id="save-recipe">
+                            <i class="fas fa-save me-2"></i>Guardar Receta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'kitchen/js/create-recipe.js' %}"></script>
+{% endblock %}

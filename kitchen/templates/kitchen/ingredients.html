@@ -1,0 +1,171 @@
+{% extends 'kitchen/base.html' %}
+{% load static %}
+
+{% block title %}Ingredientes - Gestión de Cocina{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-carrot text-warning me-2"></i>
+        Gestión de Ingredientes
+    </h2>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIngredientModal">
+        <i class="fas fa-plus me-2"></i>Nuevo Ingrediente
+    </button>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" id="search-ingredients" placeholder="Buscar ingredientes...">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="filter-by-unit">
+            <option value="">Filtrar por unidad</option>
+            <option value="g">Gramos</option>
+            <option value="kg">Kilogramos</option>
+            <option value="ml">Mililitros</option>
+            <option value="l">Litros</option>
+            <option value="u">Unidades</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="sort-ingredients">
+            <option value="name">Ordenar por nombre</option>
+            <option value="stock">Ordenar por stock</option>
+            <option value="cost">Ordenar por costo</option>
+        </select>
+    </div>
+</div>
+
+<div class="row" id="ingredients-container">
+    <!-- Los ingredientes se cargarán aquí dinámicamente -->
+</div>
+
+<div class="text-center mt-4" id="loading-ingredients" style="display: none;">
+    <div class="spinner-border text-warning" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando ingredientes frescos...</p>
+</div>
+
+<!-- Modal para agregar/editar ingrediente -->
+<div class="modal fade" id="addIngredientModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus me-2"></i>Nuevo Ingrediente
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ingredient-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="ingredient-id">
+                    
+                    <div class="mb-3">
+                        <label for="ingredient-name" class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" id="ingredient-name" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="ingredient-unit" class="form-label">Unidad *</label>
+                                <select class="form-select" id="ingredient-unit-select" required>
+                                    <option value="g">Gramos</option>
+                                    <option value="kg">Kilogramos</option>
+                                    <option value="ml">Mililitros</option>
+                                    <option value="l">Litros</option>
+                                    <option value="u">Unidades</option>
+                                    <option value="cup">Tazas</option>
+                                    <option value="tbsp">Cucharadas</option>
+                                    <option value="tsp">Cucharaditas</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="cost-per-unit" class="form-label">Costo por unidad *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="cost-per-unit" 
+                                           step="0.01" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="current-stock" class="form-label">Stock actual</label>
+                        <input type="number" class="form-control" id="current-stock" 
+                               step="0.001" min="0" value="0">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="save-ingredient">
+                    <i class="fas fa-save me-2"></i>Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para actualizar stock -->
+<div class="modal fade" id="updateStockModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-boxes me-2"></i>Actualizar Stock
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="stock-form">
+                    {% csrf_token %}
+                    <input type="hidden" id="stock-ingredient-id">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Ingrediente</label>
+                        <input type="text" class="form-control" id="stock-ingredient-name" readonly>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Stock Actual</label>
+                                <input type="text" class="form-control" id="current-stock-display" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="new-stock" class="form-label">Nuevo Stock *</label>
+                                <input type="number" class="form-control" id="new-stock" 
+                                       step="0.001" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="update-stock">
+                    <i class="fas fa-sync me-2"></i>Actualizar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'kitchen/js/ingredients.js' %}"></script>
+{% endblock %}

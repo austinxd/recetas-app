@@ -1,0 +1,110 @@
+{% extends 'kitchen/base.html' %}
+{% load static %}
+
+{% block title %}Inicio - Gestión de Cocina{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="hero-section text-center py-5 mb-5 bg-gradient rounded">
+            <h1 class="display-4 mb-4">
+                <i class="fas fa-chef-hat text-warning"></i>
+                ¡Bienvenido a tu Cocina!
+            </h1>
+            <p class="lead mb-4">
+                Crea recetas deliciosas, gestiona tu inventario y calcula costos como un chef profesional
+            </p>
+            <div class="row g-3 mt-4">
+                <div class="col-md-4">
+                    <a href="{% url 'kitchen:create_recipe' %}" class="btn btn-success btn-lg w-100 action-btn">
+                        <i class="fas fa-plus-circle mb-2 d-block"></i>
+                        Crear Receta
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'kitchen:recipes' %}" class="btn btn-primary btn-lg w-100 action-btn">
+                        <i class="fas fa-book-open mb-2 d-block"></i>
+                        Ver Recetas
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'kitchen:ingredients' %}" class="btn btn-info btn-lg w-100 action-btn">
+                        <i class="fas fa-carrot mb-2 d-block"></i>
+                        Ingredientes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card stat-card mb-4">
+            <div class="card-body text-center">
+                <div class="stat-icon bg-success">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h5 class="card-title">Recetas Totales</h5>
+                <h2 class="stat-number text-success" id="total-recipes">{{ total_recipes }}</h2>
+                <p class="text-muted">recetas disponibles</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card mb-4">
+            <div class="card-body text-center">
+                <div class="stat-icon bg-primary">
+                    <i class="fas fa-carrot"></i>
+                </div>
+                <h5 class="card-title">Ingredientes</h5>
+                <h2 class="stat-number text-primary" id="total-ingredients">{{ total_ingredients }}</h2>
+                <p class="text-muted">ingredientes registrados</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card mb-4">
+            <div class="card-body text-center">
+                <div class="stat-icon bg-warning">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h5 class="card-title">Costo Promedio</h5>
+                <h2 class="stat-number text-warning" id="avg-cost">{{ avg_cost|floatformat:2 }}</h2>
+                <p class="text-muted">por porción</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-star me-2"></i>Recetas Destacadas
+                </h5>
+            </div>
+            <div class="card-body" id="featured-recipes">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Ingredientes con Stock Bajo
+                </h5>
+            </div>
+            <div class="card-body" id="low-stock-ingredients">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'kitchen/js/home.js' %}"></script>
+{% endblock %}

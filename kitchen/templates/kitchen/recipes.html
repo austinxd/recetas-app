@@ -1,0 +1,89 @@
+{% extends 'kitchen/base.html' %}
+{% load static %}
+
+{% block title %}Recetas - Gestión de Cocina{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-book-open text-primary me-2"></i>
+        Mis Recetas
+    </h2>
+    <a href="{% url 'kitchen:create_recipe' %}" class="btn btn-success">
+        <i class="fas fa-plus me-2"></i>Nueva Receta
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="fas fa-search"></i>
+            </span>
+            <input type="text" class="form-control" id="search-recipes" placeholder="Buscar recetas...">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="filter-by-cost">
+            <option value="">Filtrar por costo</option>
+            <option value="low">Bajo costo (< $2)</option>
+            <option value="medium">Costo medio ($2-$5)</option>
+            <option value="high">Alto costo (> $5)</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" id="sort-recipes">
+            <option value="name">Ordenar por nombre</option>
+            <option value="cost">Ordenar por costo</option>
+            <option value="portions">Ordenar por porciones</option>
+        </select>
+    </div>
+</div>
+
+<div class="row" id="recipes-container">
+    <!-- Las recetas se cargarán aquí dinámicamente -->
+</div>
+
+<div class="text-center mt-4" id="loading-recipes" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando recetas deliciosas...</p>
+</div>
+
+<div class="text-center mt-5" id="no-recipes" style="display: none;">
+    <div class="empty-state">
+        <i class="fas fa-book-open fa-4x text-muted mb-3"></i>
+        <h4 class="text-muted">¡No hay recetas aún!</h4>
+        <p class="text-muted">Comienza creando tu primera receta deliciosa</p>
+        <a href="{% url 'kitchen:create_recipe' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus me-2"></i>Crear Primera Receta
+        </a>
+    </div>
+</div>
+
+<!-- Modal para ver detalles de la receta -->
+<div class="modal fade" id="recipeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recipeModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="recipeModalBody">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="scale-recipe-btn">
+                    <i class="fas fa-expand-arrows-alt me-2"></i>Escalar Receta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'kitchen/js/recipes.js' %}"></script>
+{% endblock %}
