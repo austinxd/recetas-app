@@ -1,0 +1,203 @@
+KeyError at /admin/kitchen/recipeingredient/
+'✓'
+Request Method:	GET
+Request URL:	http://19a8d8f2-1789-427b-9db5-5f5a1ac5d23a-00-hsmb7qbe8457.riker.replit.dev/admin/kitchen/recipeingredient/
+Django Version:	4.2
+Exception Type:	KeyError
+Exception Value:	
+'✓'
+Exception Location:	/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 178, in _boolean_icon
+Raised during:	django.contrib.admin.options.changelist_view
+Python Executable:	/home/runner/workspace/.pythonlibs/bin/python
+Python Version:	3.11.13
+Python Path:	
+['/home/runner/workspace',
+ '/nix/store/zz7i75jb78idaz0rb1y1i4rzdyxq28vf-sitecustomize/lib/python/site-packages',
+ '/nix/store/yaps09f01jp3fd1405qlr0qz6haf6z03-python3.11-pip-25.0.1/lib/python3.11/site-packages',
+ '/nix/store/7d088dip86hlzri9sk0h78b63yfmx0a0-python3-3.11.13/lib/python311.zip',
+ '/nix/store/7d088dip86hlzri9sk0h78b63yfmx0a0-python3-3.11.13/lib/python3.11',
+ '/nix/store/7d088dip86hlzri9sk0h78b63yfmx0a0-python3-3.11.13/lib/python3.11/lib-dynload',
+ '/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages',
+ '/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages',
+ '/nix/store/y0iwy8ma2m45pr23bw4r7lyz69v2b6wf-python3.11-setuptools-80.7.1/lib/python3.11/site-packages']
+Server time:	Mon, 15 Sep 2025 14:53:20 +0000
+Error during template rendering
+In template /home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templates/admin/change_list.html, error at line 68
+
+✓
+58	        {% block search %}{% search_form cl %}{% endblock %}
+59	        {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+60	
+61	        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+62	        {% if cl.formset %}
+63	          <div>{{ cl.formset.management_form }}</div>
+64	        {% endif %}
+65	
+66	        {% block result_list %}
+67	          {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+68	          {% result_list cl %}
+69	          {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+70	        {% endblock %}
+71	        {% block pagination %}{% pagination cl %}{% endblock %}
+72	        </form>
+73	      </div>
+74	      {% block filters %}
+75	        {% if cl.has_filters %}
+76	          <div id="changelist-filter">
+77	            <h2>{% translate 'Filter' %}</h2>
+78	            {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
+Traceback Switch to copy-and-paste view
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py, line 55, in inner
+                response = get_response(request)
+                               ^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py, line 220, in _get_response
+                response = response.render()
+                                ^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/response.py, line 111, in render
+            self.content = self.rendered_content
+                                ^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/response.py, line 89, in rendered_content
+        return template.render(context, self._request)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py, line 61, in render
+            return self.template.render(context)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 175, in render
+                    return self._render(context)
+                                ^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 167, in _render
+        return self.nodelist.render(context)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in render
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in <listcomp>
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 966, in render_annotated
+            return self.render(context)
+                        ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py, line 157, in render
+            return compiled_parent._render(context)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 167, in _render
+        return self.nodelist.render(context)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in render
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in <listcomp>
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 966, in render_annotated
+            return self.render(context)
+                        ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py, line 157, in render
+            return compiled_parent._render(context)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 167, in _render
+        return self.nodelist.render(context)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in render
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in <listcomp>
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 966, in render_annotated
+            return self.render(context)
+                        ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py, line 63, in render
+                result = block.nodelist.render(context)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in render
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in <listcomp>
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 966, in render_annotated
+            return self.render(context)
+                        ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py, line 63, in render
+                result = block.nodelist.render(context)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in render
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 1005, in <listcomp>
+        return SafeString("".join([node.render_annotated(context) for node in self]))
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py, line 966, in render_annotated
+            return self.render(context)
+                        ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/base.py, line 45, in render
+        return super().render(context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/library.py, line 258, in render
+        _dict = self.func(*resolved_args, **resolved_kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 336, in result_list
+        "results": list(results(cl)),
+                        ^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 312, in results
+            yield ResultList(None, items_for_result(cl, res, None))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 303, in __init__
+        super().__init__(*items)
+             ^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 224, in items_for_result
+                result_repr = display_for_value(value, empty_value_display, boolean)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/utils.py, line 442, in display_for_value
+        return _boolean_icon(value)
+                    ^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/contrib/admin/templatetags/admin_list.py, line 178, in _boolean_icon
+        "admin/img/icon-%s.svg" % {True: "yes", False: "no", None: "unknown"}[field_val]
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ …
+Local vars
+Request information
+USER
+admin
+
+GET
+No GET data
+
+POST
+No POST data
+

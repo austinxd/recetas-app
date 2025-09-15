@@ -43,8 +43,8 @@ class RecipeIngredientInline(admin.TabularInline):
     def is_sufficient(self, obj):
         """Display whether there's enough stock."""
         if obj.id:
-            return "✓" if obj.is_sufficient else "✗"
-        return "-"
+            return obj.is_sufficient
+        return None
     is_sufficient.short_description = "Stock Suficiente"
     is_sufficient.boolean = True
 
@@ -115,7 +115,7 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
     
     def is_sufficient(self, obj):
         """Display if stock is sufficient."""
-        return "✓" if obj.is_sufficient else "✗"
+        return obj.is_sufficient
     is_sufficient.short_description = "Stock Suficiente"
     is_sufficient.boolean = True
 
