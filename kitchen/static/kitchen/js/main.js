@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Format currency
         formatCurrency: function(amount) {
-            return new Intl.NumberFormat('es-CO', {
+            return new Intl.NumberFormat('es-ES', {
                 style: 'currency',
-                currency: 'COP',
+                currency: 'EUR',
                 minimumFractionDigits: 2
             }).format(amount);
         },
