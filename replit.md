@@ -62,8 +62,9 @@ This system allows kitchen managers to:
 ### Database Configuration
 - Development: PostgreSQL via DATABASE_URL
 - Production: Configurable via environment variables:
-  - `DB_ENGINE=django.db.backends.mysql`
+  - `DB_ENGINE=django.db.backends.mysql` or `django.db.backends.postgresql`
   - `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`
+- Remote Server: Use `.env.example` as template for production environment
 
 ### Current Status
 - ✅ All models implemented with proper relationships
