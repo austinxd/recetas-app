@@ -1,0 +1,33 @@
+# Django y dependencias principales
+Django==4.2
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+django-filter==23.3
+
+# Variables de entorno
+python-dotenv==1.0.0
+
+# Base de datos
+dj-database-url==2.1.0
+psycopg2-binary==2.9.7  # Para PostgreSQL
+# mysqlclient==2.2.0    # Descomenta para MySQL
+
+# Servidor de producción
+gunicorn==21.2.0
+
+# Utilidades adicionales
+Pillow==10.0.1          # Para manejo de imágenes
+whitenoise==6.6.0       # Para servir archivos estáticos
+python-decouple==3.8    # Alternativa a python-dotenv
+
+# Opcional: Cache y performance
+# redis==5.0.1
+# django-redis==5.4.0
+
+# Opcional: Logging y monitoreo
+# sentry-sdk==1.38.0
+
+# Desarrollo y testing (opcional)
+# pytest==7.4.2
+# pytest-django==4.5.2
+# flake8==6.1.0
