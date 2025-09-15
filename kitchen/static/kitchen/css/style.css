@@ -264,12 +264,13 @@ body {
 .hero-section {
     position: relative;
     padding: var(--space-20) var(--space-8);
-    margin-bottom: var(--space-16);
-    background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 50%, var(--primary-400) 100%);
+    margin-bottom: var(--space-20);
+    background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-500) 30%, var(--primary-400) 70%, #818cf8 100%);
     border-radius: var(--radius-3xl);
     color: white;
     overflow: hidden;
     box-shadow: var(--shadow-2xl);
+    transform: perspective(1000px) rotateX(0.5deg);
 }
 
 .hero-section::before {
@@ -441,7 +442,7 @@ body {
 }
 
 .card-body {
-    padding: var(--space-8);
+    padding: var(--space-10);
 }
 
 .card-header {
@@ -468,20 +469,21 @@ body {
    ======================================== */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: var(--space-8);
-    margin-bottom: var(--space-16);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-10);
+    margin-bottom: var(--space-20);
 }
 
 .stat-card {
     background: var(--surface-primary);
     border-radius: var(--radius-2xl);
-    padding: var(--space-8);
+    padding: var(--space-10);
     text-align: center;
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-base);
     position: relative;
     overflow: hidden;
+    border: 1px solid var(--border-secondary);
 }
 
 .stat-card::before {
@@ -540,9 +542,9 @@ body {
    ======================================== */
 .content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: var(--space-8);
-    margin-bottom: var(--space-16);
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: var(--space-10);
+    margin-bottom: var(--space-20);
 }
 
 .recipe-card,
@@ -801,6 +803,44 @@ body {
 
 .slide-in {
     animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   MEJORAS ADICIONALES DE DISEÑO
+   ======================================== */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
+    pointer-events: none;
+}
+
+.stat-number {
+    background: linear-gradient(135deg, var(--primary-600), var(--primary-400));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-secondary);
+    background: linear-gradient(135deg, var(--surface-secondary), var(--surface-tertiary));
+}
+
+/* Mejora de las tarjetas de contenido */
+.content-grid .card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .content-grid .card {
+    background: rgba(17, 24, 39, 0.95);
+    border: 1px solid rgba(55, 65, 81, 0.3);
 }
 
 /* ========================================
