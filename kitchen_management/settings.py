@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,9 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    'kitchen',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,12 +81,35 @@ WSGI_APPLICATION = 'kitchen_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Database configuration - supports both PostgreSQL (dev) and MySQL (production)
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL and DATABASE_URL.startswith('postgres'):
+    # PostgreSQL configuration (for development environment)
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
     }
-}
+else:
+    # Default configuration with environment variables support
+    # For MySQL, set these environment variables:
+    # DB_ENGINE=django.db.backends.mysql
+    # DB_NAME=your_database_name
+    # DB_USER=your_username
+    # DB_PASSWORD=your_password
+    # DB_HOST=localhost
+    # DB_PORT=3306
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.getenv('DB_NAME', os.getenv('PGDATABASE', 'kitchen_db')),
+            'USER': os.getenv('DB_USER', os.getenv('PGUSER', 'postgres')),
+            'PASSWORD': os.getenv('DB_PASSWORD', os.getenv('PGPASSWORD', '')),
+            'HOST': os.getenv('DB_HOST', os.getenv('PGHOST', 'localhost')),
+            'PORT': os.getenv('DB_PORT', os.getenv('PGPORT', '5432')),
+        }
+    }
 
 
 # Password validation
@@ -121,3 +152,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django REST Framework configuration
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'PAGE_SIZE': 20
+}
+
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True  # Only for development
+
+# Allow all hosts in development
+ALLOWED_HOSTS = ['*']
