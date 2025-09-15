@@ -51,11 +51,12 @@ class IngredientViewSet(viewsets.ModelViewSet):
             )
         
         try:
-            ingredient.current_stock = float(new_stock)
+            from decimal import Decimal, InvalidOperation
+            ingredient.current_stock = Decimal(str(new_stock))
             ingredient.save()
             serializer = self.get_serializer(ingredient)
             return Response(serializer.data)
-        except ValueError:
+        except (ValueError, InvalidOperation, TypeError):
             return Response(
                 {'error': 'Invalid stock value'}, 
                 status=status.HTTP_400_BAD_REQUEST

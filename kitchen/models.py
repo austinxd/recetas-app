@@ -90,16 +90,19 @@ class Recipe(models.Model):
         if not self.recipeingredient_set.exists():
             return 0
             
-        min_portions = float('inf')
+        min_portions = None
         
         for recipe_ingredient in self.recipeingredient_set.all():
             if recipe_ingredient.quantity == 0:
                 continue
                 
             available_portions = recipe_ingredient.ingredient.current_stock / recipe_ingredient.quantity
-            min_portions = min(min_portions, available_portions)
+            if min_portions is None:
+                min_portions = available_portions
+            else:
+                min_portions = min(min_portions, available_portions)
         
-        if min_portions == float('inf'):
+        if min_portions is None:
             return 0
             
         # Return the number of complete batches possible
